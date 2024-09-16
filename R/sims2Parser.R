@@ -57,7 +57,7 @@ sims2Parser <-
                     "You may have empty lines or line breaks!"))
     }
     #Ensure we have the correct number of columns
-    data <- data[, seq_len(header)]
+    data <- data[, seq_len(length(header))]
     #Get number of columns and assign the header
     names(data) <- header
     #Data element, period and orgunit must be specified
@@ -201,7 +201,7 @@ sims2Parser <-
       assessments_ou_acoc[assessments_ou_acoc$period > 1, ]
     asessments_collisions <- assessments[0, ]
     if (nrow(assessments_ou_acoc_dups) > 0) {
-      for (i in seq_len(assessments_ou_acoc_dups)) {
+      for (i in seq_len(nrow(assessments_ou_acoc_dups))) {
         foo <- assessments_ou_acoc_dups[i, ]
         bar <-
           assessments[
@@ -234,7 +234,7 @@ sims2Parser <-
           possible_dates <- possible_dates[!(possible_dates %in% dates)]
 
           duplicated_dates <- which(duplicated(bar$period))
-          for (j in seq_len(duplicated_dates)) {
+          for (j in seq_len(length(duplicated_dates))) {
             this_date <- as.Date(bar$period[duplicated_dates[j]], "%Y%m%d")
             #Which date is closest?
             date_distance <-
